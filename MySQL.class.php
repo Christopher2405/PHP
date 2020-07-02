@@ -44,11 +44,11 @@ class MySQL
         switch(func_num_args())
         {
             case 0: // Default credentials
-                $this->host = "localhost";
-                $this->port = 3306;
-                $this->database = "Test";
-                $this->user = "root";
-                $this->password = "";
+                $this->host = "**********";
+                $this->port = **********;
+                $this->database = "**********";
+                $this->user = "**********";
+                $this->password = "**********";
             break;
 
             case 5: // Use custom credentials (follows the same order as they're declared)
@@ -237,6 +237,8 @@ class MySQL
     function __destruct()
     {
         $this->close();
+        foreach($this as $property)
+            $property = null;
     }
 }
 ?>
