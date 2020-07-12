@@ -184,6 +184,7 @@ class MySQL
         $statement = $this->prepareStatement($sql, $params);
         if(!$statement)
             return false;
+        $this->affected_rows = 0;
         if(!mysqli_stmt_execute($statement)) {
             $this->last_error_message = $this->errors['EXECUTE'].mysqli_error($this->connection);
             return false;
@@ -237,7 +238,7 @@ class MySQL
     function __destruct()
     {
         $this->close();
-        foreach($this as $property)
+        foreach($this as &$property)
             $property = null;
     }
 }
