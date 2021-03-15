@@ -30,10 +30,10 @@ class MySQL
     private $last_error_message;
     private static $error_messages = array(
         'BAD_ARGUMENT' => 'Argumento de conexión no válido o fuera de orden: ',
-        'NOT_CONNECTED' => 'No se pudo conectar con la base de datos',
-        'PREPARE_STATEMENT' => 'No se pudo preparar la consulta con la instrucción dada',
-        'BAD_BINDING' => 'Los parámetros dados no coinciden con sus marcadores',
-        'EXECUTE' => 'Fallo al intentar ejecutar la consulta'
+        'NOT_CONNECTED' => 'No se pudo conectar con la base de datos. ',
+        'PREPARE_STATEMENT' => 'No se pudo preparar la consulta con la instrucción dada. ',
+        'BAD_BINDING' => 'Los parámetros dados no coinciden con sus marcadores. ',
+        'EXECUTE' => 'Fallo al intentar ejecutar la consulta. '
     );
     
     /**
@@ -54,29 +54,28 @@ class MySQL
         if(filter_var($_host, FILTER_VALIDATE_IP)) {
             $this->host = $_host;
         } else {
-            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'Host';
+            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'Host.';
         }
         if(is_integer($_port)) {
             $this->port = $_port;
         } else {
-            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'Port';
+            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'Port.';
         }
         if(strlen(trim($_database))>0 && strpos($_database, ' ')===false) {
             $this->database = $_database;
         } else {
-            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'Database';
+            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'Database.';
         }
         if(strlen(trim($_user))>0 && strpos($_user, ' ')===false) {
             $this->user = $_user;
         } else {
-            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'User';
+            $this->last_error_message = self::$error_messages['BAD_ARGUMENT'].'User.';
         }
         $this->password = $_password;
         $this->last_error_message = '';
         $this->connection = null;
     }
 
-        
     /**
      * Method errorMessage
      *
@@ -86,7 +85,7 @@ class MySQL
      */
     public function errorMessage()
     {
-        return $this->last_error_message.'.'.PHP_EOL;
+        return $this->last_error_message.PHP_EOL;
     }
 
     /**
@@ -178,7 +177,6 @@ class MySQL
         return $prepared_statement;
     }
 
-        
     /**
      * Method execute
      *
