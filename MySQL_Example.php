@@ -13,27 +13,28 @@
 */
 
     // Add the class file and create a new instance (using default credentials).
-    require_once './MySQL.class.php';
+    require_once './MySQL.php';
     $db = new MySQL();
     
     // Open a new connection
     if(!$db->open())
-        die($db->getErrorDescription());
+        die($db->errorMessage());
     
     // Add a new record
     $sql = 'INSERT INTO People VALUES(null, ?, ?)';
     $params = array('Christopher', '24');
     if(!$db->execute($sql, $params))
-        die($db->getErrorDescription());
+        die($db->errorMessage());
     
     // Sanitize a variable
     $new_name = $db->clear('<script>Christopher</script> Bryan');
 
     // Update a record and show affected rows
     $sql = 'UPDATE People SET Name=?';
-    if(!$db->execute($sql, array($new_name)))
-        die($db->getErrorDescription());
-    echo 'Affected rows: '.$db->affected_rows."<br>";
+    $affected_rows = $db->execute($sql, array($new_name));
+    if($affected_rows == -1)
+        die($db->errorMessage());
+    echo 'Affected rows: '.$affected_rows."<br>";
 
     // Perform a query without parameters
     $sql = 'SELECT * FROM People';
